@@ -1,0 +1,4 @@
+PyTelegramBotAPI
+python-dotenv
+openpyxl
+sqlite3

@@ -1,0 +1,17 @@
+# Virtual muhit papkasi
+venv/
+.venv/
+
+# Ma'lumotlar bazasi fayllari
+*.db
+*.sqlite3
+
+# Maxfiy konfiguratsiya fayli
+.env
+
+# Kesh papkalari
+__pycache__/
+.cache/
+
+# Log fayllari
+*.log
