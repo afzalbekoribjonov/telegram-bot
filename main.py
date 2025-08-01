@@ -47,4 +47,4 @@ if __name__ == '__main__':
     init_db()
     register_all_handlers(bot)
     print("Bot is starting...")
-    bot.polling(none_stop=True)
+    bot.infinity_polling()
