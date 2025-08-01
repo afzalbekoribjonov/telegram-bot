@@ -1,5 +1,3 @@
-# handlers/buy.py
-
 from telebot.types import CallbackQuery, Message, ReplyKeyboardRemove
 from database import get_user_language, get_all_prices, get_all_admins
 from texts import get_texts
@@ -42,7 +40,8 @@ def register_buy_handlers(bot):
         )
 
     @bot.message_handler(
-        func=lambda message: user_states.get(message.from_user.id, {}).get("state") == "waiting_buy_number")
+        func=lambda message: isinstance(user_states.get(message.from_user.id), dict) and
+                             user_states.get(message.from_user.id, {}).get("state") == "waiting_buy_number")
     def process_buy_number(message: Message):
         user_id = message.from_user.id
         lang = get_user_language(user_id)
@@ -96,8 +95,9 @@ def register_buy_handlers(bot):
         user_states[user_id] = {"state": "waiting_payment_proof", "diamond_count": diamond_count}
 
     @bot.message_handler(content_types=['photo', 'document'],
-                         func=lambda message: user_states.get(message.from_user.id, {}).get(
-                             "state") == "waiting_payment_proof")
+                         func=lambda message: isinstance(user_states.get(message.from_user.id), dict) and
+                                              user_states.get(message.from_user.id, {}).get(
+                                                  "state") == "waiting_payment_proof")
     def process_payment_proof(message: Message):
         user_id = message.from_user.id
         lang = get_user_language(user_id)
@@ -150,8 +150,9 @@ def register_buy_handlers(bot):
             user_states[user_id]["state"] = "waiting_for_admin_action"
 
     @bot.message_handler(content_types=['text'],
-                         func=lambda message: user_states.get(message.from_user.id, {}).get(
-                             "state") == "waiting_payment_proof")
+                         func=lambda message: isinstance(user_states.get(message.from_user.id), dict) and
+                                              user_states.get(message.from_user.id, {}).get(
+                                                  "state") == "waiting_payment_proof")
     def process_invalid_payment_proof(message: Message):
         user_id = message.from_user.id
         lang = get_user_language(user_id)
